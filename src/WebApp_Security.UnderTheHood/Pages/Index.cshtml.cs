@@ -6,6 +6,8 @@ namespace WebApp_Security.UnderTheHood.Pages
 	[Authorize]
 	public class IndexModel : PageModel
 	{
+		public const string ROUTE = "/Index";
+
 		private readonly ILogger<IndexModel> _logger;
 
 		public IndexModel(ILogger<IndexModel> logger)

@@ -7,6 +7,8 @@ namespace WebApp_Security.UnderTheHood.Pages
 	[Authorize(Policy = Constants.Policies.ADMIN_ONLY)]
 	public class SettingsModel : PageModel
 	{
+		public const string ROUTE = "/Settings";
+
 		public void OnGet()
 		{
 		}

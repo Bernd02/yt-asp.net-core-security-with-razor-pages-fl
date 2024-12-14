@@ -1,0 +1,12 @@
+﻿@using WebApp_Security.UnderTheHood.Pages.Account
+
+@if (this.User.Identity.IsAuthenticated)
+{
+    <form asp-page="@LogoutModel.ROUTE" method="post">
+        <button class="btn btn-link" type="submit">Logout</button>
+    </form>
+}
+else
+{
+    <a asp-page="@LoginModel.ROUTE" class="btn btn-link">Login</a>
+}

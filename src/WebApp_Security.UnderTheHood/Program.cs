@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using WebApp_Security.UnderTheHood;
+using WebApp_Security.UnderTheHood.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,21 +22,52 @@ builder.Services.AddAuthentication(Constants.AuthTypes.AUTH_TYPE)
 		options.AccessDeniedPath = "/Account/AccessDenied";
 	});
 
-// video 9
-builder.Services.AddAuthorization(options =>
-{
-	// policy consists of a series of claims
-	options.AddPolicy(Constants.Policies.ADMIN_ONLY,
-		config => config.RequireClaim(Constants.Claims.ADMIN_CLAIM));
 
-	options.AddPolicy(Constants.Policies.HR_MANAGER_ONLY,
+// video 9 - compiler suggest to use AddAuthorizationBuilder instead of AddAuthorization
+builder.Services.AddAuthorizationBuilder()
+	// policy consists of a series of claims
+	// policiy - admin only
+	.AddPolicy(Constants.Policies.ADMIN_ONLY,
+		config => config.RequireClaim(Constants.Claims.ADMIN_CLAIM))
+
+	// policiy - manager only
+	.AddPolicy(Constants.Policies.HR_MANAGER_ONLY,
 		config => config
 			.RequireClaim(Constants.Claims.ADMIN_CLAIM)
-			.RequireClaim(Constants.Claims.HR_MANAGER_CLAIM));
+			.RequireClaim(Constants.Claims.HR_MANAGER_CLAIM)
+			// the minActiveDays (10) may be configured in the appSettings
+			.Requirements.Add(new HrManagerAuthRequirement(10)))
 
-	options.AddPolicy(Constants.Policies.POLICY_MUST_BELONG_TO_HR_DEPARTMENT,
+	// policiy - must belong to hr department
+	.AddPolicy(Constants.Policies.POLICY_MUST_BELONG_TO_HR_DEPARTMENT,
 		config => config.RequireClaim(Constants.Claims.DEPARTMENT_CLAIM, "HR"));
-});
+
+/*
+	builder.Services.AddAuthorization(options =>
+	{
+		// policy consists of a series of claims
+		// policiy - admin only
+		options.AddPolicy(Constants.Policies.ADMIN_ONLY,
+			config => config.RequireClaim(Constants.Claims.ADMIN_CLAIM));
+	
+		// policiy - manager only
+		options.AddPolicy(Constants.Policies.HR_MANAGER_ONLY,
+			config => config
+				.RequireClaim(Constants.Claims.ADMIN_CLAIM)
+				.RequireClaim(Constants.Claims.HR_MANAGER_CLAIM)
+	
+				// the minActiveDays (10) may be configured in the appSettings
+				.Requirements.Add(new HrManagerAuthRequirement(10)));
+	
+		// policiy - must belong to hr department
+		options.AddPolicy(Constants.Policies.POLICY_MUST_BELONG_TO_HR_DEPARTMENT,
+			config => config.RequireClaim(Constants.Claims.DEPARTMENT_CLAIM, "HR"));
+	});
+*/
+
+
+// register the handler for the HrManagerAuthRequirement
+builder.Services.AddSingleton<IAuthorizationHandler, HrManagerAutRequirementHandler>();
 
 
 // --------------------------------------------------

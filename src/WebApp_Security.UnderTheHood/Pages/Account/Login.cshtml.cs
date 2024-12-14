@@ -9,6 +9,8 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 {
 	public class LoginModel : PageModel
 	{
+		public const string ROUTE = "/Account/Login";
+
 		[BindProperty]
 		public Credential? Credential { get; set; }
 
@@ -17,7 +19,7 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 
 		}
 
-		public async Task<IActionResult> OnPost()
+		public async Task<IActionResult> OnPostAsync()
 		{
 			// simple validation
 			if (false == this.ModelState.IsValid
@@ -33,9 +35,12 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 			{
 				new Claim(ClaimTypes.Name, this.Credential.UserName!),
 				new Claim(ClaimTypes.Email, "admin@email.com"),
-				new Claim(Constants.Claims.DEPARTMENT_CLAIM,"HR"),
-				new Claim(Constants.Claims.ADMIN_CLAIM,"thisValueDoesNotMatter"),
-				new Claim(Constants.Claims.HR_MANAGER_CLAIM,"thisValueDoesNotMatter")
+				new Claim(Constants.Claims.DEPARTMENT_CLAIM, "HR"),
+				new Claim(Constants.Claims.ADMIN_CLAIM, "thisValueDoesNotMatter"),
+				new Claim(Constants.Claims.HR_MANAGER_CLAIM, "thisValueDoesNotMatter"),
+
+				// add HrManagerEmploymentDate - days active (-11) can come from a db or something
+				new Claim(Constants.Claims.EMPLOYMENT_DATE, DateTime.Today.AddDays(-11).ToShortDateString()),
 			};
 			var identity = new ClaimsIdentity(claims, Constants.AuthTypes.AUTH_TYPE);
 			var claimsPrincipal = new ClaimsPrincipal(identity);
@@ -44,7 +49,7 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 			// you can view this in the browser dev-tools at application > Cookies > CookieName
 			await this.HttpContext.SignInAsync(Constants.AuthTypes.AUTH_TYPE, claimsPrincipal);
 
-			return RedirectToPage("/Index");
+			return RedirectToPage(IndexModel.ROUTE);
 		}
 	}
 

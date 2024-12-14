@@ -19,5 +19,6 @@ internal static class Constants
 		public const string DEPARTMENT_CLAIM = "DepartmentClaim";
 		public const string ADMIN_CLAIM = "AdminClaim";
 		public const string HR_MANAGER_CLAIM = "HrManagerClaim";
+		public const string EMPLOYMENT_DATE = "EmploymentDate";
 	}
 }
