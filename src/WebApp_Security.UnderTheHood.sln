@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp_Security.UnderTheHood", "WebApp_Security.UnderTheHood\WebApp_Security.UnderTheHood.csproj", "{5BDBC41D-7B7E-4CD4-BA9C-F70864769A70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F78CE86C-2406-4916-ACC9-7B0FE89302E9}"
+	ProjectSection(SolutionItems) = preProject
+		info.md = info.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BDBC41D-7B7E-4CD4-BA9C-F70864769A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BDBC41D-7B7E-4CD4-BA9C-F70864769A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BDBC41D-7B7E-4CD4-BA9C-F70864769A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BDBC41D-7B7E-4CD4-BA9C-F70864769A70}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
