@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using WebApp_Security.UnderTheHood;
 using WebApp_Security.UnderTheHood.Authorization;
 
@@ -20,6 +19,9 @@ builder.Services.AddAuthentication(Constants.AuthTypes.AUTH_TYPE)
 
 		// video 9
 		options.AccessDeniedPath = "/Account/AccessDenied";
+
+		// set cookie expiration time - video 12
+		options.ExpireTimeSpan = TimeSpan.FromSeconds(10);
 	});
 
 

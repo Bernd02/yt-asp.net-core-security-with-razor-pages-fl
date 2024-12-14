@@ -45,9 +45,15 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 			var identity = new ClaimsIdentity(claims, Constants.AuthTypes.AUTH_TYPE);
 			var claimsPrincipal = new ClaimsPrincipal(identity);
 
+			// Set persistent cookie - video 12
+			var authProperties = new AuthenticationProperties()
+			{
+				IsPersistent = this.Credential.RemeberLogin
+			};
+
 			// create the auth cookie - encrypt its data - add it to the HttpContext.User
 			// you can view this in the browser dev-tools at application > Cookies > CookieName
-			await this.HttpContext.SignInAsync(Constants.AuthTypes.AUTH_TYPE, claimsPrincipal);
+			await this.HttpContext.SignInAsync(Constants.AuthTypes.AUTH_TYPE, claimsPrincipal, authProperties);
 
 			return RedirectToPage(IndexModel.ROUTE);
 		}
@@ -63,6 +69,9 @@ namespace WebApp_Security.UnderTheHood.Pages.Account
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; } = string.Empty;
+
+		[Display(Name = "Remember Login")]
+		public bool RemeberLogin { get; set; }
 	}
 }
 
